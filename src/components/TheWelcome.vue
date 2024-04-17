@@ -1,6 +1,3 @@
-<script>
- 
-</script>
  <template >
 
   <div class="Auth  position-relative"  >
@@ -10,60 +7,73 @@
         <img src="../assets/photos/me.jpg" alt="" class="Pic rounded rounded-circle m-3">
         <div class="form-group text-center" style="text-align:center">
           <div class=" input-group mb-3">
-            <input type="text" id="fname" name="fname" placeholder="Username" class="form-control form-control-lg" required><br><br>
+            <input type="text" id="fname" v-model="username" name="fname" :placeholder="$t('name')" class="form-control form-control-lg" required><br><br>
             <span class="input-group-text" id="basic-addon2">            
-              <i class="fa-solid fa-user "></i>
+              <button class="border-0"> <i class="fa-solid fa-user "></i> </button>
             </span>
             
           </div>
           <div class=" input-group mb-3">
-            <input type="password" id="pwd" name="pwd" class="form-control form-control-lg" required>
+            <input :type="passwordFieldType" id="pwd" name="pwd" v-model="password" class="form-control form-control-lg" required>
             <span class="input-group-text" id="basic-addon2">            
-              <i class="fa-solid fa-lock"></i>
+              <button class="border-0" @click="switchVisibility"><i class="fa-solid fa-lock"></i></button>
             </span>
           </div>
         </div>
         <div>
           <input type="checkbox">
-          <span class="text-secondary">  Keep me logged in ?</span>
+          <span class="text-secondary">   {{$t('keepmeloggedit')}} </span>
         </div>
         <div class="icons">+
           <i class="fa-solid fa-g bg-primary m-2 p-2"></i>
           <i class="fa-brands fa-facebook-f bg-primary p-2"></i>
         </div>
         <div style="text-align:center;margin-top:30px">
-            <button  type="submit" class="btn btn-dark btn-lg btn-block">
+            <button  type="submit" class="SignUpbtn btn-dark btn-lg btn-block">
               <!--Vite <span class="spinner-border spinner-border-sm mr-1"></span> -->
-              Signin
+              {{ $t('SignUp') }}
             </button>
         </div>
         <div class="text-end">
-          <span class="text-secondary"> You don't have an Account ? 
-            <a href="http://"> Sign up </a>
+          <span class="text-secondary"> {{ $t('Signin') }}
+            <a href="http://"> {{ $t('donthaveAccount') }} </a>
           </span> <br>
           <span> 
             <a href="http://">
-              Forgot Password
+              {{ $t('forgotPassword') }}
             </a>
           </span>
         </div>
       </div>
     </form>
+
+    
   </span> 
   </div>
 </template>
 <script>
 export default {
+      state: () => ({
+      loading:false,
+    }),
   data() {
     return {
+       password: '',
+       passwordFieldType: "password",
        
     };
   },
 
   computed: {
- 
+        isSubmitting() {
+          return loading
+        },
   },
   methods: {
+        switchVisibility() {
+          this.passwordFieldType = this.passwordFieldType === "password" ? 'text' : "password"
+          this.isSubmitting = false;
+        },
   }
 }
 </script>
@@ -72,7 +82,6 @@ export default {
 <style>
  
 .Auth{
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../assets/photos/Amazingvue.png");
   background-position:  center;
   background-size: cover;
   width: 100%;
